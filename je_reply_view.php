@@ -3,10 +3,11 @@ ini_set( "display_errors", 1 );
 error_reporting( E_ALL );
 
 $no = $_GET['no'];
-$db = new mysqli('localhost','root','whwpdms','je');
-$sql = "SELECT * FROM board1 WHERE no = '$no'";
-$result = mysqli_query($db, $sql);
-$tmp = mysqli_fetch_assoc($result);
+$db = new PDO("mysql:host=localhost;dbname=je",'root','whwpdms');
+$sql = 'SELECT * FROM board1 WHERE no = ?';
+$result = $db->prepare($sql);
+$result->execute(array($no));
+$tmp = $result->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,9 +39,10 @@ $tmp = mysqli_fetch_assoc($result);
         </form>
     </table>
     <?php 
-    $sql2 = "SELECT * FROM test_reply WHERE boardNo = $no ORDER BY originNo DESC, groupOrd ASC";
-    $result2 = mysqli_query($db, $sql2);
-    while($tmp2 = mysqli_fetch_assoc($result2)){
+    $sql2 = 'SELECT * FROM test_reply WHERE boardNo = ? ORDER BY originNo DESC, groupOrd ASC';
+    $result2 = $db->prepare($sql2);
+    $result2->execute(array($no));
+    foreach ($result2->fetchAll(PDO::FETCH_ASSOC) as $tmp2){
     ?>
     <table>
         <tr>

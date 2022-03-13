@@ -2,24 +2,26 @@
 ini_set( "display_errors", 1 );
 error_reporting( E_ALL );
 
-$db = new mysqli('localhost','root','whwpdms','je');
+$db = new PDO("mysql:host=localhost;dbname=je",'root','whwpdms');
 
 $boardNo = $_POST['boardNo'];
 $rewriter = $_POST['rewriter'];
 $recontent = $_POST['recontent'];
 
-$sql = "SELECT MAX(replyNo) AS replyNo FROM test_reply WHERE boardNo = '$boardNo'";
-$result = mysqli_query($db, $sql);
-$tmp = mysqli_fetch_assoc($result);
-
+$sql = 'SELECT MAX(replyNo) AS replyNo FROM test_reply WHERE boardNo = ?';
+$result = $db->prepare($sql);
+$result->execute(array($boardNo));
+$tmp = $result->fetch(PDO::FETCH_ASSOC);
 $originNo = $tmp['replyNo'];
 $originNo = $originNo + 1;
+$redate = date('Y-m-d H:i:s');
 
 $groupOrd = 0;
 $depth = 0;
 
-$sql1 = "INSERT INTO test_reply (boardNo, originNo, groupOrd, depth, rewriter, recontent, redate) VALUES ('$boardNo','$originNo','$groupOrd','$depth','$rewriter','$recontent',NOW())";
-$result1 = mysqli_query($db, $sql1);
+$sql2 = 'INSERT INTO test_reply (boardNo, originNo, groupOrd, depth, rewriter, recontent, redate) VALUES (?,?,?,?,?,?,?)';
+$result2 = $db->prepare($sql2);
+$result2->execute(array($boardNo, $originNo, $groupOrd, $depth, $rewriter, $recontent, $redate));
 ?>
 <html>
     <head>
