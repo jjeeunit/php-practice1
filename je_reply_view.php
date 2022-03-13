@@ -68,6 +68,12 @@ $tmp = $result->fetch(PDO::FETCH_ASSOC);
             <td>날짜</td>
             <td><?php echo $tmp2['redate']?></td>
         </tr>
+        <tr>
+            <td></td>
+            <td>
+                <a href="je_reply_update_view.php?replyNo=<?=$tmp2['replyNo']?>">수정</a>
+            </td>
+        </tr>
     <?php } ?>
     </table>
     <p>&nbsp;</p>
