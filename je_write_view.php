@@ -8,7 +8,7 @@
 </head>
 <body>
     <table border=1 align=center>
-        <form action="je_write_server.php" method="post">
+        <form name="je_write_server" action="je_write_server.php" method="post">
             <tr>
                 <td>제목</td>
                 <td><input type="text" name="utitle"></td>
