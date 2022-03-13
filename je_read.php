@@ -16,10 +16,11 @@
             <th>내용</th>
         </tr>
 <?php
-$db = new mysqli('localhost','root','whwpdms','je');
+$db = new PDO("mysql:host=localhost;dbname=je", 'root', 'whwpdms');
 $sql = 'SELECT * FROM board1';
-$result = mysqli_query($db, $sql);
-while($tmp = mysqli_fetch_assoc($result)){ ?>
+$result = $db->prepare($sql);
+$result->execute(array());
+    foreach ($result->fetchAll(PDO::FETCH_ASSOC) as $tmp){ ?>
         <tr>
             <td><?php echo $tmp['no']?></td>
             <td><?php echo $tmp['utitle']?></td>

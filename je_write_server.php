@@ -7,10 +7,10 @@
  $naming = $_POST['naming'];
  $uname = $_POST['uname'];
  $ucontent = $_POST['ucontent'];
-
- $sql = 'INSERT INTO board1 VALUES(?,?,?,?,?)';
+ 
+ $sql = 'INSERT INTO board1 (utitle, naming, uname, ucontent) VALUES (?,?,?,?)';
  $result = $db->prepare($sql);
- $result->execute(array('',$utitle, $naming, $uname, $ucontent));
+ $result->execute(array($utitle, $naming, $uname, $ucontent));
 ?>
 <html>
     <head>
